@@ -2,12 +2,10 @@ import { FC, useMemo, useEffect } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
-import { useDispatch, useSelector } from '../../services/store';
+import { useDispatch, useSelector, RootState } from '../../services/store';
 import { useParams } from 'react-router-dom';
-import { RootState } from '../../services/store';
 import { getCurrentOrder } from '../../services/slices/orderSlice';
 import { selectAllIngredients } from '../../services/slices/ingredientSlice';
-import { setOrder } from '../../services/slices/feedSlice';
 
 export const OrderInfo: React.FC = () => {
   const { number } = useParams();

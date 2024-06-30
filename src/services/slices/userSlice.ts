@@ -15,51 +15,35 @@ import {
 import { deleteCookie, setCookie } from '../../utils/cookie';
 
 // Register
-
 export const register = createAsyncThunk(
   'user/registerUser',
   async (registerData: TRegisterData) => {
-    try {
-      const res = await registerUserApi(registerData);
-      return res.user;
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    const res = await registerUserApi(registerData);
+    return res.user;
   }
 );
 
 // Log In
-
 export const logIn = createAsyncThunk(
   'user/logInUser',
   async (loginData: TLoginData) => {
-    try {
-      const res = await loginUserApi(loginData);
-      setCookie('accessToken', res.accessToken);
-      localStorage.setItem('refreshToken', res.refreshToken);
-      return res.user;
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    const res = await loginUserApi(loginData);
+    setCookie('accessToken', res.accessToken);
+    localStorage.setItem('refreshToken', res.refreshToken);
+    return res.user;
   }
 );
 
 // Change user
-
 export const changeUser = createAsyncThunk(
   'user/changeUser',
   async (newData: TUser) => {
-    try {
-      const res = await updateUserApi(newData);
-      return res.user;
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    const res = await updateUserApi(newData);
+    return res.user;
   }
 );
 
 // Log out
-
 export const logOut = createAsyncThunk(
   'user/logOutUser',
   async (_, thunkApi) => {
@@ -70,21 +54,15 @@ export const logOut = createAsyncThunk(
 );
 
 // Reset password
-
 export const resetPassword = createAsyncThunk(
   'user/resetPassworrd',
   async (data: { password: string; token: string }) => {
-    try {
-      const res = await resetPasswordApi(data);
-      return res;
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    const res = await resetPasswordApi(data);
+    return res;
   }
 );
 
 // Auth checking
-
 export const checkUserAuth = createAsyncThunk(
   'auth/checkUserAuth',
   async (_, { dispatch }) => {
@@ -106,19 +84,16 @@ export const checkUserAuth = createAsyncThunk(
 
 type TUserState = {
   user: TUser | null;
-  isAuth: boolean;
+  isAuth?: boolean;
   error: string | undefined;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 };
 
 const initialState: TUserState = {
   user: null,
-  isAuth: false,
   error: undefined,
   status: 'idle'
 };
-
-// Слайс
 
 const userSlice = createSlice({
   name: 'user',

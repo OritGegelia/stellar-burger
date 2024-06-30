@@ -22,12 +22,18 @@ const constructorSlice = createSlice({
   name: 'burgerPuzzle',
   initialState,
   reducers: {
-    addIngredient(state, action: PayloadAction<TIngredient>) {
-      const newIngredient = {
-        ...action.payload,
-        id: uuidv4()
-      };
-      state.constructorItems.ingredients.push(newIngredient);
+    addIngredient: {
+      reducer(state, action: PayloadAction<TConstructorIngredient>) {
+        state.constructorItems.ingredients.push(action.payload);
+      },
+      prepare(ingredient: TIngredient) {
+        return {
+          payload: {
+            ...ingredient,
+            id: uuidv4()
+          }
+        };
+      }
     },
     removeIngredient(state, action: PayloadAction<string>) {
       state.constructorItems.ingredients =
@@ -46,6 +52,26 @@ const constructorSlice = createSlice({
     cleanConstructorItems(state) {
       state.constructorItems.bun = null;
       state.constructorItems.ingredients = [];
+    },
+    upIngredient: (state, action: PayloadAction<string>) => {
+      for (let i = 1; i < state.constructorItems.ingredients.length; i++)
+        if (state.constructorItems.ingredients[i].id === action.payload) {
+          const temp = state.constructorItems.ingredients[i - 1];
+          state.constructorItems.ingredients[i - 1] =
+            state.constructorItems.ingredients[i];
+          state.constructorItems.ingredients[i] = temp;
+          break;
+        }
+    },
+    downIngredient: (state, action: PayloadAction<string>) => {
+      for (let i = 0; i < state.constructorItems.ingredients.length - 1; i++)
+        if (state.constructorItems.ingredients[i].id === action.payload) {
+          const temp = state.constructorItems.ingredients[i + 1];
+          state.constructorItems.ingredients[i + 1] =
+            state.constructorItems.ingredients[i];
+          state.constructorItems.ingredients[i] = temp;
+          break;
+        }
     }
   }
 });
@@ -54,6 +80,8 @@ export const {
   addIngredient,
   removeIngredient,
   changeIngredient,
-  cleanConstructorItems
+  cleanConstructorItems,
+  upIngredient,
+  downIngredient
 } = constructorSlice.actions;
 export default constructorSlice.reducer;

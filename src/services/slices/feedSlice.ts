@@ -7,12 +7,8 @@ import { TOrder } from '@utils-types';
 //  Get orders
 
 export const getMyOrders = createAsyncThunk('order/getOrders', async () => {
-  try {
-    const res = await getOrdersApi();
-    return res;
-  } catch (error) {
-    return Promise.reject(error);
-  }
+  const res = await getOrdersApi();
+  return res;
 });
 
 type TInitialState = {

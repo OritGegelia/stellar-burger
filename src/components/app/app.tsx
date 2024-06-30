@@ -20,13 +20,18 @@ import {
   useMatch
 } from 'react-router-dom';
 import { AppHeader, Modal, IngredientDetails, OrderInfo } from '@components';
-import Protected from '../../services/protectedRoute';
-import { getAuthChecked } from '../../services/slices/userSlice';
+import Protected from '../protected-route/protected-route';
+import {
+  getAuthChecked,
+  checkUserAuth,
+  getUser
+} from '../../services/slices/userSlice';
 
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isAuth = useSelector(getAuthChecked);
+  const user = useSelector(getUser);
 
   const matchFeed = useMatch('/feed/:number');
   const matchProfileOrders = useMatch('/profile/orders/:number');

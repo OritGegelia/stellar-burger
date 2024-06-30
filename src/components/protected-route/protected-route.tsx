@@ -1,8 +1,8 @@
-import { useSelector } from 'react-redux';
-import { getUser, getAuthChecked } from './slices/userSlice';
+import { useSelector } from '../../services/store';
+import { getUser, getAuthChecked } from '../../services/slices/userSlice';
 import { useLocation, Navigate } from 'react-router-dom';
-import { Preloader } from '../components/ui/preloader';
 import React from 'react';
+import { Preloader } from '../ui/preloader';
 
 type TProtectedProps = {
   onlyUnAuth?: boolean;

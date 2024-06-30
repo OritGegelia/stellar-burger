@@ -8,12 +8,8 @@ import { RootState } from '../store';
 export const fetchIngredients = createAsyncThunk(
   'ingredients/fetchIngredients',
   async () => {
-    try {
-      const data = await getIngredientsApi();
-      return data;
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    const data = await getIngredientsApi();
+    return data;
   }
 );
 

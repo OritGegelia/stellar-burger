@@ -14,13 +14,9 @@ import { stat } from 'fs/promises';
 export const order = createAsyncThunk(
   'order/order',
   async (orderIngredients: string[]) => {
-    try {
-      const res = await orderBurgerApi(orderIngredients);
-      console.log(`hi`);
-      return res.order;
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    const res = await orderBurgerApi(orderIngredients);
+    console.log(`hi`);
+    return res.order;
   }
 );
 
@@ -29,12 +25,8 @@ export const order = createAsyncThunk(
 export const getCurrentOrder = createAsyncThunk(
   'order/getOrder',
   async (number: any) => {
-    try {
-      const res = await getOrderByNumberApi(number);
-      return res.orders;
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    const res = await getOrderByNumberApi(number);
+    return res.orders;
   }
 );
 
