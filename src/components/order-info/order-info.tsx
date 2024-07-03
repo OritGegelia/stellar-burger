@@ -4,8 +4,13 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useDispatch, useSelector, RootState } from '../../services/store';
 import { useParams } from 'react-router-dom';
-import { getCurrentOrder } from '../../services/slices/orderSlice';
 import { selectAllIngredients } from '../../services/slices/ingredientSlice';
+import {
+  getCurrentOrder,
+  selectCurrentOrder
+} from '../../services/slices/orderSlice';
+
+// TODO
 
 export const OrderInfo: React.FC = () => {
   const { number } = useParams();
@@ -17,7 +22,8 @@ export const OrderInfo: React.FC = () => {
     }
   }, [dispatch, number]);
 
-  const orderData = useSelector((state: RootState) => state.order.currentOrder);
+  const orderData = useSelector(selectCurrentOrder);
+
   const ingredients: TIngredient[] = useSelector(selectAllIngredients);
 
   const orderInfo = useMemo(() => {

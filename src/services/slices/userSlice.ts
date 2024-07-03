@@ -12,7 +12,7 @@ import {
   updateUserApi,
   resetPasswordApi
 } from '../../utils/burger-api';
-import { deleteCookie, setCookie } from '../../utils/cookie';
+import { deleteCookie, setCookie, getCookie } from '../../utils/cookie';
 
 // Register
 export const register = createAsyncThunk(
@@ -62,16 +62,15 @@ export const resetPassword = createAsyncThunk(
   }
 );
 
-// Auth checking
 export const checkUserAuth = createAsyncThunk(
   'auth/checkUserAuth',
   async (_, { dispatch }) => {
-    if (localStorage.getItem('accessToken')) {
+    if (getCookie('accessToken')) {
       getUserApi()
         .then((res) => dispatch(setUser(res.user)))
         .catch(() => {
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
+          deleteCookie('accessToken');
+          deleteCookie('refreshToken');
         })
         .finally(() => dispatch(setAuthChecked(true)));
     } else {
@@ -84,7 +83,7 @@ export const checkUserAuth = createAsyncThunk(
 
 type TUserState = {
   user: TUser | null;
-  isAuth?: boolean;
+  isAuth: boolean;
   error: string | undefined;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 };
@@ -92,7 +91,8 @@ type TUserState = {
 const initialState: TUserState = {
   user: null,
   error: undefined,
-  status: 'idle'
+  status: 'idle',
+  isAuth: false
 };
 
 const userSlice = createSlice({
@@ -129,7 +129,6 @@ const userSlice = createSlice({
       .addCase(logIn.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.user = action.payload;
-        state.isAuth = true;
       })
       .addCase(logIn.rejected, (state, action) => {
         state.status = 'failed';
@@ -146,7 +145,6 @@ const userSlice = createSlice({
       .addCase(logOut.fulfilled, (state) => {
         state.status = 'succeeded';
         state.user = null;
-        state.isAuth = false;
       })
       .addCase(logOut.rejected, (state, action) => {
         state.status = 'failed';

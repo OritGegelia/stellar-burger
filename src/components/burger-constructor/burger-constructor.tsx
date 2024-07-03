@@ -4,24 +4,27 @@ import { BurgerConstructorUI } from '@ui';
 import { useDispatch, useSelector } from '../../services/store';
 import { RootState } from '../../services/store';
 import { useNavigate } from 'react-router-dom';
-import { getAuthChecked } from '../../services/slices/userSlice';
+import { getAuthChecked, getUser } from '../../services/slices/userSlice';
 import { cleanConstructorItems } from '../../services/slices/constructorSlice';
 import {
-  order,
   selectOrderModalData,
-  setOrderModalData
+  setOrderModalData,
+  setOrder,
+  selectFeedStatus
 } from '../../services/slices/orderSlice';
+
+// TODO
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuth = useSelector(getAuthChecked);
+  const isAuth = useSelector(getUser);
   const constructorItems = useSelector(
     (state: RootState) => state.burgerPuzzle.constructorItems
   );
 
   const orderRequest = useSelector(
-    (state: RootState) => state.order.status === 'loading'
+    (state: RootState) => selectFeedStatus(state) === 'loading'
   );
 
   const orderModalData = useSelector(selectOrderModalData) || null;
@@ -36,7 +39,7 @@ export const BurgerConstructor: FC = () => {
         ...constructorItems.ingredients.map((a) => a._id),
         constructorItems.bun._id!
       ];
-      dispatch(order(ids));
+      dispatch(setOrder(ids));
     }
   };
 

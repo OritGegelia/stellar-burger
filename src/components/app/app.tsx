@@ -26,12 +26,15 @@ import {
   checkUserAuth,
   getUser
 } from '../../services/slices/userSlice';
+import { useEffect } from 'react';
 
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isAuth = useSelector(getAuthChecked);
+  const dispatch = useDispatch();
   const user = useSelector(getUser);
+
+  console.log(`User: `, user);
 
   const matchFeed = useMatch('/feed/:number');
   const matchProfileOrders = useMatch('/profile/orders/:number');
@@ -40,11 +43,13 @@ const App = () => {
 
   const background = location.state?.background;
 
+  useEffect(() => {
+    dispatch(checkUserAuth());
+  }, [dispatch]);
+
   const closeModal = () => {
     navigate(-1);
   };
-
-  console.log(`Auth status`, isAuth);
 
   return (
     <div className={styles.app}>

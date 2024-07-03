@@ -1,24 +1,19 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   orderBurgerApi,
-  getOrdersApi,
-  getOrderByNumberApi
+  getOrderByNumberApi,
+  getOrdersApi
 } from '../../utils/burger-api';
+import { PayloadAction, createSlice, isAction } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { getFeedsApi } from '../../utils/burger-api';
 import { TOrder } from '@utils-types';
-import { stat } from 'fs/promises';
 
-// Set order
+// Get feed
 
-export const order = createAsyncThunk(
-  'order/order',
-  async (orderIngredients: string[]) => {
-    const res = await orderBurgerApi(orderIngredients);
-    console.log(`hi`);
-    return res.order;
-  }
-);
+export const getFeed = createAsyncThunk('order/getFeed', async () => {
+  const res = await getFeedsApi();
+  return res;
+});
 
 // Get current order
 
@@ -30,26 +25,54 @@ export const getCurrentOrder = createAsyncThunk(
   }
 );
 
-type TOrderState = {
+// Get user orders
+
+export const getUserOrders = createAsyncThunk(
+  'order/getUserOrders',
+  async () => {
+    const res = await getOrdersApi();
+    return res;
+  }
+);
+
+// Set order
+
+export const setOrder = createAsyncThunk(
+  'order/order',
+  async (orderIngredients: string[]) => {
+    const res = await orderBurgerApi(orderIngredients);
+    return res.order;
+  }
+);
+
+type TInitialState = {
   currentOrder?: TOrder | null;
   order?: TOrder | null;
-  orders?: TOrder[] | null;
+  orders?: TOrder[];
+  feed?: TOrder[];
+  total: number;
+  totalToday: number;
   orderId: string;
   error: string | undefined;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   orderModalData?: TOrder | null;
   orderRequest?: boolean;
+  selectedOrder: string | null;
 };
 
-const initialState: TOrderState = {
+const initialState: TInitialState = {
   currentOrder: null,
   order: null,
-  orders: null,
+  orders: [],
+  feed: [],
+  total: 0,
+  totalToday: 0,
   orderId: '',
   error: undefined,
   status: 'idle',
   orderModalData: null,
-  orderRequest: false
+  orderRequest: false,
+  selectedOrder: null
 };
 
 const orderSlice = createSlice({
@@ -61,20 +84,26 @@ const orderSlice = createSlice({
     }
   },
   selectors: {
-    selectOrderModalData: (state) => state.orderModalData
+    selectOrders: (state) => state.orders ?? [], // заказы пользователя
+    selectFeed: (state) => state.feed ?? [], // все заказы в ленте
+    selectTotal: (state) => state.total, // всего заказов
+    selectTotalToday: (state) => state.totalToday, //заказов сегодня
+    selectCurrentOrder: (state) => state.currentOrder, // выбранный заказ
+    selectFeedStatus: (state) => state.status, // статус
+    selectOrderModalData: (state) => state.orderModalData // данные для модалки
   },
   extraReducers: (builder) => {
     builder
-      .addCase(order.fulfilled, (state, action) => {
+      .addCase(setOrder.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.order = action.payload;
         state.orderModalData = action.payload;
       })
-      .addCase(order.pending, (state) => {
+      .addCase(setOrder.pending, (state) => {
         state.status = 'failed';
         state.orderRequest = true;
       })
-      .addCase(order.rejected, (state, action) => {
+      .addCase(setOrder.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
         state.orderRequest = false;
@@ -86,10 +115,45 @@ const orderSlice = createSlice({
       .addCase(getCurrentOrder.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(getUserOrders.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(getUserOrders.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.orders = action.payload;
+        console.log(`User's orders`, action.payload);
+      })
+      .addCase(getUserOrders.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(getFeed.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(getFeed.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.feed = action.payload.orders;
+        state.total = action.payload.total;
+        state.totalToday = action.payload.totalToday;
+      })
+      .addCase(getFeed.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
       });
   }
 });
 
+export const {
+  selectOrders,
+  selectFeed,
+  selectCurrentOrder,
+  selectFeedStatus,
+  selectOrderModalData,
+  selectTotal,
+  selectTotalToday
+} = orderSlice.selectors;
+
 export const { setOrderModalData } = orderSlice.actions;
-export const { selectOrderModalData } = orderSlice.selectors;
+
 export default orderSlice.reducer;

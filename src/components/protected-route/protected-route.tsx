@@ -17,6 +17,10 @@ const Protected: React.FC<TProtectedProps> = ({
   const user = useSelector(getUser);
   const location = useLocation();
 
+  if (!isAuthChecked) {
+    return <Preloader />;
+  }
+
   if (!onlyUnAuth && !user) {
     return <Navigate to={'/login'} state={{ from: location }} />;
   }
