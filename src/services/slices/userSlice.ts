@@ -88,7 +88,7 @@ type TUserState = {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   user: null,
   error: undefined,
   status: 'idle',

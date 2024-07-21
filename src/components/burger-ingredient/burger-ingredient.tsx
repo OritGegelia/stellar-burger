@@ -4,7 +4,7 @@ import { useDispatch } from '../../services/store';
 import {
   addIngredient,
   changeIngredient
-} from '../../services/slices/constructorSlice';
+} from '../../services/slices/constructorSlice/constructorSlice';
 
 import { BurgerIngredientUI } from '@ui';
 import { TBurgerIngredientProps } from './type';

@@ -60,7 +60,7 @@ type TInitialState = {
   selectedOrder: string | null;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   currentOrder: null,
   order: null,
   orders: [],

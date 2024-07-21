@@ -4,7 +4,7 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useDispatch, useSelector, RootState } from '../../services/store';
 import { useParams } from 'react-router-dom';
-import { selectAllIngredients } from '../../services/slices/ingredientSlice';
+import { selectAllIngredients } from '../../services/slices/ingredientSlice/ingredientSlice';
 import {
   getCurrentOrder,
   selectCurrentOrder

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '../../services/store';
 import { RootState } from '../../services/store';
 import { useNavigate } from 'react-router-dom';
 import { getAuthChecked, getUser } from '../../services/slices/userSlice';
-import { cleanConstructorItems } from '../../services/slices/constructorSlice';
+import { cleanConstructorItems } from '../../services/slices/constructorSlice/constructorSlice';
 import {
   selectOrderModalData,
   setOrderModalData,
