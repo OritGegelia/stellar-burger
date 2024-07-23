@@ -11,8 +11,8 @@ import {
   getUserApi,
   updateUserApi,
   resetPasswordApi
-} from '../../utils/burger-api';
-import { deleteCookie, setCookie, getCookie } from '../../utils/cookie';
+} from '../../../utils/burger-api';
+import { deleteCookie, setCookie, getCookie } from '../../../utils/cookie';
 
 // Register
 export const register = createAsyncThunk(

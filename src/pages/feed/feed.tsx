@@ -7,7 +7,7 @@ import {
   getFeed,
   selectFeed,
   selectFeedStatus
-} from '../../services/slices/orderSlice';
+} from '../../services/slices/orderSlice/orderSlice';
 
 // TODO
 

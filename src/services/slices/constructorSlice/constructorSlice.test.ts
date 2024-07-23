@@ -5,7 +5,7 @@ import constructorSlice, {
   upIngredient,
   downIngredient
 } from './constructorSlice';
-import { setOrderModalData } from '../orderSlice';
+import { setOrderModalData } from '../orderSlice/orderSlice';
 
 // Моковые данные ингредиентов для проверки
 
@@ -104,5 +104,5 @@ describe('Тест слайса конструктора бургера', () => 
 
     expect(newState.constructorItems.ingredients[0]).toEqual(testIngredient2);
     expect(newState.constructorItems.ingredients[1]).toEqual(testIngredient1);
-  })
+  });
 });

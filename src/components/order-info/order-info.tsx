@@ -8,7 +8,7 @@ import { selectAllIngredients } from '../../services/slices/ingredientSlice/ingr
 import {
   getCurrentOrder,
   selectCurrentOrder
-} from '../../services/slices/orderSlice';
+} from '../../services/slices/orderSlice/orderSlice';
 
 // TODO
 

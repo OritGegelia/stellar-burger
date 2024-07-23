@@ -1,60 +1,86 @@
 import { configureStore } from '@reduxjs/toolkit';
-import ingredientReducer, { fetchIngredients, initialState, setIngredient } from './ingredientSlice';
-import { getIngredientsApi } from '../../../utils/burger-api';
+import ingredientReducer, {
+  fetchIngredients,
+  setIngredient
+} from './ingredientSlice';
+import { TIngredient } from '@utils-types';
 
-jest.mock('../../../utils/burger-api'); // Отключаем реальный API
+const mockIngredients: TIngredient[] = [
+  {
+    _id: 'e5e2ae2b4248c744cff2',
+    name: 'Биокотлета из марсианской Магнолии',
+    type: 'main',
+    proteins: 420,
+    fat: 142,
+    carbohydrates: 242,
+    calories: 4242,
+    price: 424,
+    image: 'https://code.s3.yandex.net/react/code/meat-01.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png',
+    image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png'
+  },
+  {
+    _id: 'e720e1411651dc383e96',
+    name: 'Соус с шипами Антарианского плоскоходца',
+    type: 'sauce',
+    proteins: 101,
+    fat: 99,
+    carbohydrates: 100,
+    calories: 100,
+    price: 88,
+    image: 'https://code.s3.yandex.net/react/code/sauce-01.png',
+    image_mobile: 'https://code.s3.yandex.net/react/code/sauce-01-mobile.png',
+    image_large: 'https://code.s3.yandex.net/react/code/sauce-01-large.png'
+  }
+];
 
-describe('ingredientSlice', () => {
-  let store;
+describe('ingredient slice reducers', () => {
+  let store: any;
 
+  // Инициализация магазина перед каждым тестом
   beforeEach(() => {
     store = configureStore({
       reducer: {
-        ingredients: ingredientReducer,
-      },
+        ingredients: ingredientReducer
+      }
     });
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+  // Тест для редьюсера setIngredient
 
-  it('should handle setIngredient', () => {
-    const ingredientId = '12345';
-    store.dispatch(setIngredient(ingredientId));
+  it('Тест для редьюсера setIngredient', () => {
+    store.dispatch(setIngredient(mockIngredients[0]._id));
     const state = store.getState().ingredients;
-    expect(state.selectedIngredientId).toBe(ingredientId);
+    expect(state.selectedIngredientId).toBe(mockIngredients[0]._id);
   });
 
-  describe('fetchIngredients', () => {
-    it('should handle pending state', async () => {
-      const action = fetchIngredients.pending('1', 'fetchIngredients');
+  // Тест для fetchIngredients.pending
 
-      const state = ingredientReducer(initialState, action);
-      expect(state.status).toBe('loading');
-      expect(state.isLoading).toBe(true);
-    });
+  it('Тест для fetchIngredients.pending', () => {
+    store.dispatch(fetchIngredients.pending('', undefined));
+    const state = store.getState().ingredients;
+    expect(state.status).toBe('loading');
+    expect(state.isLoading).toBe(true);
+  });
 
-    it('should handle fulfilled state', async () => {
-      const mockIngredients = [{ _id: '1', name: 'Ingredient 1' }, { _id: '2', name: 'Ingredient 2' }];
-      (getIngredientsApi as jest.Mock).mockResolvedValueOnce(mockIngredients); // Задаем значение, возвращаемое из API
+  // Тест для fetchIngredients.fulfilled
 
-      const action = fetchIngredients.fulfilled(mockIngredients, '1', undefined);
-      const state = ingredientReducer(initialState, action);
+  it('Тест для fetchIngredients.fulfilled', () => {
+    store.dispatch(fetchIngredients.fulfilled(mockIngredients, '', undefined));
+    const state = store.getState().ingredients;
+    expect(state.ingredients).toEqual(mockIngredients);
+    expect(state.status).toBe('succeeded');
+    expect(state.isLoading).toBe(false);
+  });
 
-      expect(state.isLoading).toBe(false);
-      expect(state.status).toBe('succeeded');
-      expect(state.ingredients).toEqual(mockIngredients);
-    });
+  // Тест для fetchIngredients.rejected
 
-    it('should handle rejected state', async () => {
-      const errorMessage = 'Network error';
-      const action = fetchIngredients.rejected({ error: { message: errorMessage } }, '1', undefined);
-      const state = ingredientReducer(initialState, action);
-
-      expect(state.isLoading).toBe(false);
-      expect(state.status).toBe('failed');
-      expect(state.error).toBe(errorMessage);
-    });
+  it('Тест для fetchIngredients.rejected', () => {
+    const error = new Error('Network Error');
+    store.dispatch(fetchIngredients.rejected(error, '', undefined));
+    const state = store.getState().ingredients;
+    expect(state.status).toBe('failed');
+    expect(state.isLoading).toBe(false);
+    expect(state.error).toBe('Network Error');
   });
 });

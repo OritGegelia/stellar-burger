@@ -1,8 +1,8 @@
 import rootReducer from './rootReducer';
 import { RootState } from '../store';
 import { initialState as ingredientInitialState } from '../slices/ingredientSlice/ingredientSlice';
-import { initialState as userInitialState } from '../slices/userSlice';
-import { initialState as orderInitialState } from '../slices/orderSlice';
+import { initialState as userInitialState } from '../slices/userSlice/userSlice';
+import { initialState as orderInitialState } from '../slices/orderSlice/orderSlice';
 import { initialState as constructorInitialState } from '../slices/constructorSlice/constructorSlice';
 
 export const initialStates = {

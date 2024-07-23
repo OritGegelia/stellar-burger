@@ -11,7 +11,7 @@ import {
   setOrderModalData,
   setOrder,
   selectFeedStatus
-} from '../../services/slices/orderSlice';
+} from '../../services/slices/orderSlice/orderSlice';
 
 // TODO
 
