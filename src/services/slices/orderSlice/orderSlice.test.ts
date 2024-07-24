@@ -4,28 +4,26 @@ import orderReducer, {
   getFeed,
   getCurrentOrder,
   getUserOrders,
-  setOrder, 
+  setOrder,
   setOrderModalData,
   initialState
 } from './orderSlice';
 import { TOrder } from '@utils-types';
 
-
 const mockOrder: TOrder = {
-_id: '669ea1ed119d45001b4fae96',
-      ingredients: [
-        '643d69a5c3f7b9001cfa093c',
-        '643d69a5c3f7b9001cfa093e',
-        '643d69a5c3f7b9001cfa0943',
-        '643d69a5c3f7b9001cfa093c'
-      ],
-      status: 'done',
-      name: 'Краторный space люминесцентный бургер',
-      createdAt: '2024-07-22T18:16:13.171Z',
-      updatedAt: '2024-07-22T18:16:13.632Z',
-      number: 46954
-    };
-
+  _id: '669ea1ed119d45001b4fae96',
+  ingredients: [
+    '643d69a5c3f7b9001cfa093c',
+    '643d69a5c3f7b9001cfa093e',
+    '643d69a5c3f7b9001cfa0943',
+    '643d69a5c3f7b9001cfa093c'
+  ],
+  status: 'done',
+  name: 'Краторный space люминесцентный бургер',
+  createdAt: '2024-07-22T18:16:13.171Z',
+  updatedAt: '2024-07-22T18:16:13.632Z',
+  number: 46954
+};
 
 describe('Редьюсеры для orderSlice', () => {
   it('Проверка initial state', () => {
@@ -40,7 +38,7 @@ describe('Редьюсеры для orderSlice', () => {
 
   describe('extra reducers', () => {
     it('Тест для setOrder.fulfilled', () => {
-      const order = mockOrder
+      const order = mockOrder;
       const action = { type: setOrder.fulfilled.type, payload: order };
       const state = orderReducer(initialState, action);
       expect(state.status).toEqual('succeeded');

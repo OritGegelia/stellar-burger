@@ -13,7 +13,7 @@ import { TUser } from '@utils-types';
 const mockUser: TUser = {
   email: 'mail@mail.com',
   name: 'User Name'
-}
+};
 
 describe('user slice reducers', () => {
   it('Проверка initial state', () => {
@@ -46,7 +46,7 @@ describe('user slice reducers', () => {
     expect(actualState.status).toEqual('failed');
     expect(actualState.error).toEqual(error.message);
   });
-  
+
   it('Тест для logIn.fulfilled', () => {
     const user = mockUser;
     const action = { type: logIn.fulfilled.type, payload: user };
@@ -54,7 +54,7 @@ describe('user slice reducers', () => {
     expect(actualState.status).toEqual('succeeded');
     expect(actualState.user).toEqual(user);
   });
-  
+
   it('Тест для logIn.rejected', () => {
     const error = { message: 'Неудачный логин' };
     const action = { type: logIn.rejected.type, error };
@@ -62,7 +62,7 @@ describe('user slice reducers', () => {
     expect(actualState.status).toEqual('failed');
     expect(actualState.error).toEqual(error.message);
   });
-  
+
   it('Тест для changeUser.fulfilled', () => {
     const user = mockUser;
     const action = { type: changeUser.fulfilled.type, payload: user };
@@ -70,7 +70,7 @@ describe('user slice reducers', () => {
     expect(actualState.status).toEqual('succeeded');
     expect(actualState.user).toEqual(user);
   });
-  
+
   it('Тест для changeUser.rejected', () => {
     const error = { message: 'Неудачное изменение данных юзера' };
     const action = { type: changeUser.rejected.type, error };

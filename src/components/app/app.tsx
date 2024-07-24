@@ -21,7 +21,10 @@ import {
 } from 'react-router-dom';
 import { AppHeader, Modal, IngredientDetails, OrderInfo } from '@components';
 import Protected from '../protected-route/protected-route';
-import { checkUserAuth, getUser } from '../../services/slices/userSlice/userSlice';
+import {
+  checkUserAuth,
+  getUser
+} from '../../services/slices/userSlice/userSlice';
 import { useEffect } from 'react';
 
 const App = () => {
