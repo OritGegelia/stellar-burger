@@ -9,8 +9,8 @@ beforeEach(() => {
 
   cy.setCookie('accessToken', 'mocAccessToken');
   window.localStorage.setItem('refreshToken', 'mockRefreshToken');
-
-  cy.visit('http://localhost:4000/');
+  
+  cy.visit('/');
 });
 
 afterEach(() => {
@@ -54,7 +54,7 @@ describe('should check constructor work', () => {
 describe('should check modal for ingredients', () => {
   // Проверяем, что модалка не была открыта изначально + подменяем запрос для заказа
   beforeEach(() => {
-    cy.get('#modals').should('be.empty');
+    cy.get('#modal').should('not.exist');
   });
 
   it('should open modal with ingredient data', () => {
