@@ -1,11 +1,7 @@
 {
   "success": true,
-  "auth": {
-    "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmRhMWFhOTdlZGUwMDAxZDA3MGU5MyIsImlhdCI6MTcyMjAxNDI5MSwiZXhwIjoxNzIyMDE1NDkxfQ._BN79AuQJ9j60_ukLu46qsuhGfkkBW9w6BjkMx13XHY",
-    "refreshToken": "2711afe825da0bb9e2fcaf63673cfdb286d9ac79a21369cf255b12bc4690e5320e3803540920a57b"
-  },  
   "user": {
-      "email": "user@email.ru",
-      "password": "userPassword"
+      "name": "Jane Doe",
+      "email": "user@email.ru"
   }
 }

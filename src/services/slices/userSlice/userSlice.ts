@@ -67,7 +67,10 @@ export const checkUserAuth = createAsyncThunk(
   async (_, { dispatch }) => {
     if (getCookie('accessToken')) {
       getUserApi()
-        .then((res) => dispatch(setUser(res.user)))
+        .then((res) => {
+          console.log('Hello, world', res);
+          dispatch(setUser(res.user));
+        })
         .catch(() => {
           deleteCookie('accessToken');
           deleteCookie('refreshToken');
