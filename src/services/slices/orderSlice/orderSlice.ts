@@ -2,10 +2,10 @@ import {
   orderBurgerApi,
   getOrderByNumberApi,
   getOrdersApi
-} from '../../utils/burger-api';
+} from '../../../utils/burger-api';
 import { PayloadAction, createSlice, isAction } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getFeedsApi } from '../../utils/burger-api';
+import { getFeedsApi } from '../../../utils/burger-api';
 import { TOrder } from '@utils-types';
 
 // Get feed
@@ -60,7 +60,7 @@ type TInitialState = {
   selectedOrder: string | null;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   currentOrder: null,
   order: null,
   orders: [],
@@ -122,7 +122,6 @@ const orderSlice = createSlice({
       .addCase(getUserOrders.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.orders = action.payload;
-        console.log(`User's orders`, action.payload);
       })
       .addCase(getUserOrders.rejected, (state, action) => {
         state.status = 'failed';

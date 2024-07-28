@@ -7,10 +7,10 @@ export interface IBurgerConstructorSliceState {
     bun: TConstructorIngredient | null;
     ingredients: TConstructorIngredient[];
   };
-  orderModalData: TOrder | null;
+  orderModalData?: TOrder | null;
 }
 
-const initialState: IBurgerConstructorSliceState = {
+export const initialState: IBurgerConstructorSliceState = {
   constructorItems: {
     bun: null,
     ingredients: []

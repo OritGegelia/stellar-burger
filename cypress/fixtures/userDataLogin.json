@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NmRhMWFhOTdlZGUwMDAxZDA3MGU5MyIsImlhdCI6MTcyMjA4MjE2MiwiZXhwIjoxNzIyMDgzMzYyfQ.Kau3HjBFWd6k8eVnsGajUEq_d4vClsqs0uQ8Z9HF_ak",
+  "refreshToken": "c2539736b8216955fe92a46191c13b051e6fe1f08b1beb35e56a9177c5beaa7c2bac7eb742849e7c",
+  "user": {
+    "email": "en-tan@yandex.ru",
+    "name": "Химерка"
+  }
+}

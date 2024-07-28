@@ -11,8 +11,8 @@ import {
   getUserApi,
   updateUserApi,
   resetPasswordApi
-} from '../../utils/burger-api';
-import { deleteCookie, setCookie, getCookie } from '../../utils/cookie';
+} from '../../../utils/burger-api';
+import { deleteCookie, setCookie, getCookie } from '../../../utils/cookie';
 
 // Register
 export const register = createAsyncThunk(
@@ -67,7 +67,10 @@ export const checkUserAuth = createAsyncThunk(
   async (_, { dispatch }) => {
     if (getCookie('accessToken')) {
       getUserApi()
-        .then((res) => dispatch(setUser(res.user)))
+        .then((res) => {
+          console.log('Hello, world', res);
+          dispatch(setUser(res.user));
+        })
         .catch(() => {
           deleteCookie('accessToken');
           deleteCookie('refreshToken');
@@ -88,7 +91,7 @@ type TUserState = {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   user: null,
   error: undefined,
   status: 'idle',

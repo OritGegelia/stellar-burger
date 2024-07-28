@@ -7,7 +7,7 @@ import {
   fetchIngredients,
   setIngredient,
   selectAllIngredients
-} from '../../services/slices/ingredientSlice';
+} from '../../services/slices/ingredientSlice/ingredientSlice';
 
 type TIngredientParams = {
   id: string | undefined;

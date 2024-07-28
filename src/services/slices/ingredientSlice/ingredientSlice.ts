@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getIngredientsApi } from '@api';
+import { getIngredientsApi } from '../../../utils/burger-api';
 import { TIngredient } from '@utils-types';
 import { PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
 
 export const fetchIngredients = createAsyncThunk(
   'ingredients/fetchIngredients',
@@ -21,7 +20,7 @@ interface InitialState {
   selectedIngredientId: string | null;
 }
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
   ingredients: [],
   isLoading: true,
   status: 'idle',

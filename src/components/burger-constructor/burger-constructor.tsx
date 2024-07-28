@@ -4,16 +4,14 @@ import { BurgerConstructorUI } from '@ui';
 import { useDispatch, useSelector } from '../../services/store';
 import { RootState } from '../../services/store';
 import { useNavigate } from 'react-router-dom';
-import { getAuthChecked, getUser } from '../../services/slices/userSlice';
-import { cleanConstructorItems } from '../../services/slices/constructorSlice';
+import { getUser } from '../../services/slices/userSlice/userSlice';
+import { cleanConstructorItems } from '../../services/slices/constructorSlice/constructorSlice';
 import {
   selectOrderModalData,
   setOrderModalData,
   setOrder,
   selectFeedStatus
-} from '../../services/slices/orderSlice';
-
-// TODO
+} from '../../services/slices/orderSlice/orderSlice';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
