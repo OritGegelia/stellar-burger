@@ -1,9 +1,12 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { LoginUI } from '@ui-pages';
 import { useDispatch, useSelector } from '../../services/store';
-import { getUser, logIn } from '../../services/slices/userSlice';
+import {
+  getUser,
+  logIn,
+  setUser
+} from '../../services/slices/userSlice/userSlice';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { setUser } from '../../services/slices/userSlice';
 
 export const Login: FC = () => {
   const [email, setEmail] = useState('');
